@@ -1,4 +1,4 @@
-node_modules/
-coverage/
+out/
+*.class
 .DS_Store
 *.log
