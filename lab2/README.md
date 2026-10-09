@@ -28,9 +28,13 @@
 Сборка и запуск из терминала:
 
 ```bash
-javac -d out src/*.java
-java -cp out Main < input.txt
+javac -encoding UTF-8 -d out src/*.java
+java -Dsun.stdout.encoding=UTF-8 -cp out Main < input.txt
 ```
+
+Примечание: флаг `-encoding UTF-8` нужен, чтобы русские строки в исходниках компилировались
+правильно, а `-Dsun.stdout.encoding=UTF-8` — чтобы русский вывод не превращался в `???` на Windows.
+В PowerShell вместо `< input.txt` используется `Get-Content input.txt | java -Dsun.stdout.encoding=UTF-8 -cp out Main`.
 
 Пример результата:
 
@@ -48,9 +52,19 @@ a[1][2] = 7
 Для проверки используются ручные тесты без готовых тестовых библиотек:
 
 ```bash
-javac -d out src/*.java test/*.java
-java -cp out ManualTest
+javac -encoding UTF-8 -d out src/*.java test/*.java
+java -Dsun.stdout.encoding=UTF-8 -cp out ManualTest
 ```
+
+## Скриншоты запуска
+
+Ручные тесты (8/8):
+
+![Тесты](docs/tests.png)
+
+Пример работы программы:
+
+![Пример](docs/demo.png)
 
 ## Структура проекта
 
