@@ -1,19 +1,15 @@
-// Разреженная матрица в координатном формате (CS).
-// Хранятся только ненулевые элементы в односвязном списке узлов EntryNode.
-// Готовые коллекции JDK здесь не используются.
 public class SparseMatrixCS {
-    // Количество строк матрицы.
+
     private int rows;
-    // Количество столбцов матрицы.
+
     private int cols;
-    // Голова координатного списка.
+
     private EntryNode head;
-    // Хвост координатного списка.
+
     private EntryNode tail;
-    // Количество ненулевых элементов.
+
     private int count;
 
-    // Создание пустой матрицы заданного размера.
     public SparseMatrixCS(int rowCount, int colCount) {
         this.rows = rowCount;
         this.cols = colCount;
@@ -22,23 +18,18 @@ public class SparseMatrixCS {
         this.count = 0;
     }
 
-    // Количество строк.
     public int rowCount() {
         return rows;
     }
 
-    // Количество столбцов.
     public int colCount() {
         return cols;
     }
 
-    // Количество хранимых ненулевых элементов.
     public int nonZeroCount() {
         return count;
     }
 
-    // Добавление элемента, нулевые значения не хранятся.
-    // Если элемент с такими координатами уже есть, значение обновляется.
     public void set(int rowIndex, int colIndex, int value) {
         EntryNode current = head;
         while (current != null) {
@@ -62,8 +53,7 @@ public class SparseMatrixCS {
         count = count + 1;
     }
 
-    // Поиск значения по координатам последовательным обходом списка.
-    // Возвращает 0, если элемент отсутствует в координатном списке.
+    // Отсутствующего элемента нет в списке — он нулевой.
     public int get(int rowIndex, int colIndex) {
         EntryNode current = head;
         while (current != null) {
@@ -75,7 +65,6 @@ public class SparseMatrixCS {
         return 0;
     }
 
-    // Голова координатного списка для внешнего обхода.
     public EntryNode getHead() {
         return head;
     }

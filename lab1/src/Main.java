@@ -2,12 +2,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
-// Лабораторная работа 1, задача 1: списки, стеки, очереди.
-// Программа читает пары символов и проверяет полноту
-// и противоречивость порядка предшествования.
-// Все списки и стек реализованы вручную на узлах.
 public class Main {
-    // Разбор неотрицательного целого числа вручную, без готовых функций.
+
+    // Разбор числа N вручную. BOM из Блокнота Windows пропускается как пробел.
     static int parseCount(String line) {
         if (line == null) {
             throw new IllegalArgumentException("Первая строка должна содержать неотрицательное целое число N.");
@@ -16,7 +13,7 @@ public class Main {
         int end = line.length();
         while (start < end) {
             char c = line.charAt(start);
-            if (c == ' ' || c == '\t') {
+            if (c == ' ' || c == '\t' || c == '\uFEFF') {
                 start = start + 1;
             } else {
                 break;
@@ -24,7 +21,7 @@ public class Main {
         }
         while (end > start) {
             char c = line.charAt(end - 1);
-            if (c == ' ' || c == '\t') {
+            if (c == ' ' || c == '\t' || c == '\uFEFF') {
                 end = end - 1;
             } else {
                 break;
@@ -44,8 +41,6 @@ public class Main {
         return value;
     }
 
-    // Разбор одной пары из строки, допускаются скобки, запятые и точки с запятой.
-    // Пример допустимых записей: "a b", "(a, b)", "(a;b)".
     static String[] parsePair(String line, int lineNumber) {
         String first = "";
         String second = "";
@@ -90,18 +85,16 @@ public class Main {
         return pair;
     }
 
-    // Проверка, что строка пустая (только пробельные символы).
     static boolean isBlank(String line) {
         for (int i = 0; i < line.length(); i = i + 1) {
             char c = line.charAt(i);
-            if (c != ' ' && c != '\t' && c != '\r' && c != '\n') {
+            if (c != ' ' && c != '\t' && c != '\r' && c != '\n' && c != '\uFEFF') {
                 return false;
             }
         }
         return true;
     }
 
-    // Соединение списка символов через запятую для вывода.
     static String joinNames(StringList names) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < names.size(); i = i + 1) {

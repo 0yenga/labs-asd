@@ -1,7 +1,5 @@
-// Стек строк на односвязном списке, используется для поиска в глубину.
-// Готовый класс Stack из JDK здесь специально не применяется.
 public class LinkedStack {
-    // Внутренний узел стека.
+
     private static class StackNode {
         String data;
         StackNode next;
@@ -12,18 +10,15 @@ public class LinkedStack {
         }
     }
 
-    // Вершина стека.
     private StackNode top;
-    // Количество элементов.
+
     private int count;
 
-    // Создание пустого стека.
     public LinkedStack() {
         this.top = null;
         this.count = 0;
     }
 
-    // Добавление элемента на вершину стека.
     public void push(String value) {
         StackNode created = new StackNode(value);
         created.next = top;
@@ -31,7 +26,7 @@ public class LinkedStack {
         count = count + 1;
     }
 
-    // Извлечение элемента с вершины стека.
+    // Извлечение из пустого стека возвращает null.
     public String pop() {
         if (top == null) {
             return null;
@@ -42,7 +37,6 @@ public class LinkedStack {
         return value;
     }
 
-    // Признак пустого стека.
     public boolean isEmpty() {
         return top == null;
     }

@@ -1,21 +1,17 @@
-// Односвязный список строк, реализован вручную на узлах ListNode.
-// Готовые коллекции JDK здесь не используются.
 public class StringList {
-    // Голова списка.
+
     private ListNode head;
-    // Хвост списка для быстрой вставки в конец.
+
     private ListNode tail;
-    // Количество элементов списка.
+
     private int count;
 
-    // Создание пустого списка.
     public StringList() {
         this.head = null;
         this.tail = null;
         this.count = 0;
     }
 
-    // Добавление значения в конец списка.
     public void append(String value) {
         ListNode created = new ListNode(value);
         if (head == null) {
@@ -28,7 +24,6 @@ public class StringList {
         count = count + 1;
     }
 
-    // Проверка наличия значения в списке (последовательный обход).
     public boolean contains(String value) {
         ListNode current = head;
         while (current != null) {
@@ -40,17 +35,14 @@ public class StringList {
         return false;
     }
 
-    // Количество элементов списка.
     public int size() {
         return count;
     }
 
-    // Признак пустого списка.
     public boolean isEmpty() {
         return head == null;
     }
 
-    // Получение элемента по порядковому номеру (обход от головы).
     public String getAt(int index) {
         ListNode current = head;
         int position = 0;
@@ -64,7 +56,6 @@ public class StringList {
         return null;
     }
 
-    // Голова списка для внешнего обхода.
     public ListNode getHead() {
         return head;
     }

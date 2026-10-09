@@ -1,15 +1,11 @@
-// Проверка порядка предшествования на ориентированном графе.
-// Пары символов образуют дуги графа, символы являются вершинами.
-// Полнота означает достижимость между любой парой вершин.
-// Противоречивость означает наличие цикла (вершина достижима сама из себя).
 public class PrecedenceAnalyzer {
-    // Результат проверки порядка.
+
     public static class Result {
-        // Признак полного порядка.
+
         public boolean complete;
-        // Признак противоречивого порядка.
+
         public boolean contradictory;
-        // Список использованных символов в порядке появления.
+
         public StringList vertices;
 
         Result(boolean completeValue, boolean contradictoryValue, StringList vertexList) {
@@ -19,22 +15,18 @@ public class PrecedenceAnalyzer {
         }
     }
 
-    // Список всех вершин графа.
     private VertexList vertices;
 
-    // Создание пустого анализатора.
     public PrecedenceAnalyzer() {
         this.vertices = new VertexList();
     }
 
-    // Добавление пары предшествования (before предшествует after).
     public void addPair(String before, String after) {
         VertexNode from = vertices.getOrCreate(before);
         vertices.getOrCreate(after);
         from.addEdge(after);
     }
 
-    // Список вершин в порядке первого появления.
     public StringList vertexNames() {
         StringList names = new StringList();
         VertexNode current = vertices.getHead();
@@ -45,8 +37,6 @@ public class PrecedenceAnalyzer {
         return names;
     }
 
-    // Проверка достижимости цели из начала поиском в глубину.
-    // Обход выполняется вручную с помощью стека на связном списке.
     private boolean reachable(String from, String to) {
         if (from.equals(to)) {
             return reachesItself(from);
@@ -81,7 +71,7 @@ public class PrecedenceAnalyzer {
         return false;
     }
 
-    // Проверка, достижима ли вершина сама из себя (наличие цикла).
+    // Поиск идет от соседей: путь нулевой длины циклом не считается.
     private boolean reachesItself(String start) {
         StringList visited = new StringList();
         LinkedStack stack = new LinkedStack();
@@ -121,12 +111,10 @@ public class PrecedenceAnalyzer {
         return false;
     }
 
-    // Основная проверка: сначала ищется противоречие, затем полнота.
     public Result analyze() {
         StringList names = vertexNames();
         int size = names.size();
 
-        // Поиск цикла: вершина достижима сама из себя.
         for (int i = 0; i < size; i = i + 1) {
             String vertex = names.getAt(i);
             if (reachesItself(vertex)) {
@@ -134,7 +122,6 @@ public class PrecedenceAnalyzer {
             }
         }
 
-        // Проверка полноты: каждая пара вершин связана достижимостью.
         for (int i = 0; i < size; i = i + 1) {
             for (int j = i + 1; j < size; j = j + 1) {
                 String first = names.getAt(i);

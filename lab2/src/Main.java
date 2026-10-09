@@ -2,14 +2,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 
-// Лабораторная работа 2, задача 1: разреженные матрицы.
-// Дана разреженная матрица в координатном формате (CS).
-// Обход по варианту 1 (по строкам слева направо, сверху вниз),
-// вывод всех ненулевых элементов.
-// Хранение матрицы и результат обхода реализованы
-// вручную на односвязных списках.
 public class Main {
-    // Разбор целого числа вручную, допускается знак минус.
+
     static int parseInt(String text) {
         if (text == null || text.length() == 0) {
             throw new IllegalArgumentException("Ожидалось целое число.");
@@ -37,24 +31,22 @@ public class Main {
         return value;
     }
 
-    // Проверка, что строка пустая (только пробельные символы).
     static boolean isBlank(String line) {
         for (int i = 0; i < line.length(); i = i + 1) {
             char c = line.charAt(i);
-            if (c != ' ' && c != '\t' && c != '\r' && c != '\n') {
+            if (c != ' ' && c != '\t' && c != '\r' && c != '\n' && c != '\uFEFF') {
                 return false;
             }
         }
         return true;
     }
 
-    // Разбиение строки на числа вручную, разделители: пробелы, запятые, точки с запятой.
-    // Найденные числа добавляются в список tokens в виде строк.
+    // BOM из Блокнота Windows считается разделителем.
     static void splitNumbers(String line, StringList tokens) {
         StringBuilder current = new StringBuilder();
         for (int i = 0; i < line.length(); i = i + 1) {
             char c = line.charAt(i);
-            boolean separator = c == ' ' || c == '\t' || c == ',' || c == ';';
+            boolean separator = c == ' ' || c == '\t' || c == ',' || c == ';' || c == '\uFEFF';
             if (separator) {
                 if (current.length() > 0) {
                     tokens.append(current.toString());
@@ -69,9 +61,6 @@ public class Main {
         }
     }
 
-    // Чтение следующего непустого токена из потока строк.
-    // Хранилище tokens и позиция position позволяют читать числа
-    // независимо от разбиения на строки.
     static class TokenReader {
         BufferedReader reader;
         StringList tokens;
