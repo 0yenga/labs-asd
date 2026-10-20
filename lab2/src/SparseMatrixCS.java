@@ -31,12 +31,27 @@ public class SparseMatrixCS {
     }
 
     public void set(int rowIndex, int colIndex, int value) {
+        EntryNode previous = null;
         EntryNode current = head;
         while (current != null) {
             if (current.row == rowIndex && current.col == colIndex) {
-                current.value = value;
+                if (value != 0) {
+                    current.value = value;
+                    return;
+                }
+                // Запись нуля удаляет узел, иначе count и обход будут неверными.
+                if (previous == null) {
+                    head = current.next;
+                } else {
+                    previous.next = current.next;
+                }
+                if (current == tail) {
+                    tail = previous;
+                }
+                count = count - 1;
                 return;
             }
+            previous = current;
             current = current.next;
         }
         if (value == 0) {

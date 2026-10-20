@@ -26,7 +26,23 @@ public class ManualTest {
     public static void main(String[] args) {
 
         SparseMatrixCS first = build(new int[][]{{0, 5, 0}, {6, 0, 7}});
-        check(first.nonZeroCount() == 3, "хранение только ненулевых");
+
+        SparseMatrixCS removable = build(new int[][]{{1, 2, 3}});
+        removable.set(0, 0, 0);
+        removable.set(0, 1, 0);
+        removable.set(0, 2, 0);
+        removable.set(0, 1, 7);
+        StringList removableResult = new StringList();
+        MatrixWalker.walkVariant1(removable, removableResult);
+        check(first.nonZeroCount() == 3
+                && removable.nonZeroCount() == 1
+                && removable.get(0, 0) == 0
+                && removable.get(0, 1) == 7
+                && removable.get(0, 2) == 0
+                && removableResult.size() == 1
+                && removableResult.getAt(0).equals("a[0][1] = 7"),
+                "хранение только ненулевых");
+
         check(first.get(0, 0) == 0, "чтение отсутствующего элемента");
         check(first.get(0, 1) == 5, "чтение элемента");
 
